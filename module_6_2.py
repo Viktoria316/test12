@@ -97,7 +97,6 @@ vehicle1.print_info()
 
 
 class Vehicle:
-    __COLOR_VARIANTS = ['black', 'white', 'blue']
 
 
     def __init__(self, owner : str, __model : str, __engine_power : int, __color : str):
@@ -107,8 +106,6 @@ class Vehicle:
         self.__color = __color
 
     def get_model(self):
-        return
 
 
 class Sedan(Vehicle):
-    pass
