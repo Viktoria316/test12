@@ -1,4 +1,11 @@
-'''
+
+from colorama import init
+init()
+from colorama import Fore, Back, Style
+print(Fore.GREEN + 'зеленый текст')
+print(Back.YELLOW + 'на желтом фоне')
+print(Style.BRIGHT + 'стал ярче' + Style.RESET_ALL)
+print('обычный текст')
 class Human:
 
     def say(self):
@@ -18,7 +25,7 @@ class Homework(Student):
 x = Homework()
 x.say()
 
-'''
+
 
 
 
