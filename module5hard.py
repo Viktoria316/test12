@@ -98,3 +98,4 @@ urban_pythonist
 '''
 
 class User():
+    pass
