@@ -38,17 +38,27 @@ second_strings = ['Task', 'Git', 'Comprehension', 'Java', 'Computer', 'Assembler
 first_result = [len(string) for string in first_strings if len(string) >= 5]
 print(first_result)
 
-second_result = []
+second_result = [(one, second) for one in first_strings for second in second_strings if len(one) == len(second)]
+# second1_result = [first_strings + second_strings for one in first_strings for second in second_strings if len(one) == len(second)]
+'''
 for i in first_strings:
     for u in second_strings:
         if len(i) == len(u):
             second_result.append((i,u))
+            
+'''
 print(second_result)
 
-third_result = {}
+
+third_result = {i: len(i) for i in first_strings + second_strings if len(i) % 2 == 0}
+
+'''
 for i in first_strings + second_strings:
     if len(i) % 2 == 0:
         third_result[i] = len(i)
+        
+'''
+
 print(third_result)
 
 

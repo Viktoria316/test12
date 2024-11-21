@@ -121,7 +121,7 @@ print(cube1.get_volume())
 
 Успехов!
 '''
-
+'''
 class Figure:
     sides_count = 0
     __sides = []
@@ -221,3 +221,6 @@ print(len(circle1))
 
 # Проверка объёма (куба):
 print(cube1.get_volume())
+'''
+
+
