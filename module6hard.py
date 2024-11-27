@@ -121,84 +121,105 @@ print(cube1.get_volume())
 
 Успехов!
 '''
-'''
+
+import math
+
 class Figure:
-    sides_count = 0
     __sides = []
-    __color = ['red', 'green', 'blue']
-    filled = True
+    __color = []
+    filled = False
 
-    def __init__(self, red, green, blue):
-        self.red = red
-        self.green = green
-        self.blue = blue
-    # # def __sides(self):
-    #     pass
-    #
-    # # def __color(self, red, green, blue):
-    #     self.red = red
-    #     self.green = green
-    #     self.blue = blue
-    # def filled(self, bool):
-    #     pass
 
+
+    def __init__(self, rgb, *side):
+        self.color = list(rgb)
+        self.side = side[0]
+        self.filled = True
+
+    # ===== Работа с цветом
     def get_color(self):
+        self.__color = self.color
+        self.filled = True
         return self.__color
 
-    def __is_valid_color(self, r, g, b):
-        if (r and g and b) == range(0, 255):
-            self.set_color(r, g, b)
+    def _is_valid_color(self, r, g, b):
+        self.r, self.g, self.b = r, g, b
+        if 0 <= self.r <= 255 and 0 <= self.g <= 255 and 0 <= self.b <= 255:
+            return True
         else:
-            print('Некорректные цвета')
-
+            return False
 
     def set_color(self, r, g, b):
-        self.__color.append(r, g, b)
+        if self._is_valid_color(r, g, b):
+            self.color = [self.r, self.g, self.b]
 
-    def __is_valid_sides(self, __sides):
-        pass
+    # =====
+
+    # ===== Работа со сторонами
+    def __is_valid_sides(self, *args):
+        for side in self.sides:
+            if len(self.sides) == self.sides_count and side > 0 and type(side) == int:
+                return True
+            else:
+                return False
+
+    def set_sides(self, *args):
+        massive_list = []
+        self.sides = list(args)
+        if self.__is_valid_sides(self, *args):
+            self.get_sides()
+        else:
+            for i in range(self.sides_count):
+                massive_list.append(self.side)
+            self.sides = massive_list
+            self.get_sides()
 
     def get_sides(self):
+        self.__sides = self.sides
         return self.__sides
 
     def __len__(self):
-        pass
+        return self.side * self.sides_count
 
-    def set_sides(self, *new_sides):
-        pass
-
-
+    # =====
 
 
 
 class Circle(Figure):
     sides_count = 1
-    __radius = 0
-
-    def __init__(self, (r, g, b), __radius):
-        super().set_color((r, g, b))
-
+    __radius = None
+    def set_radius(self):
+        self.__radius = self.__len__() / (2 * math.pi)
+        return self.__radius
 
     def get_square(self):
-        pass
-
+        self.set_radius()
+        return math.pi * self.__radius ** 2
 
 
 class Triangle(Figure):
     sides_count = 3
-    __height = 0
 
     def get_square(self):
-        pass
+        a, b, c = self.__sides
+        s = (a + b + c) / 2
+        return math.sqrt(s * (s - a) * (s - b) * (s - c))
 
 
 
 class Cube(Figure):
     sides_count = 12
-    __sides = sides_count
+
+    def set_side_lst(self):
+        set_side_lst = []
+        for element in range(self.sides_count):
+            set_side_lst.append(self.sides)
+        self.__sides = set_side_lst
+        return self.__sides
 
     def get_volume(self):
-        pass
+        return self.side ** 3
+
 
 
 circle1 = Circle((200, 200, 100), 10) # (Цвет, стороны)
@@ -221,6 +242,5 @@ print(len(circle1))
 
 # Проверка объёма (куба):
 print(cube1.get_volume())
-'''
 
 

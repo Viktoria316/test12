@@ -1,102 +1,114 @@
 import math
 
 class Figure:
-    sides_count = 0
+    __sides = []
+    __color = []
+    filled = False
 
-    def __init__(self, color, *sides):
-        self.__color = color
-        self.filled = False
-        if len(sides) == self.sides_count:
-            self.__sides = list(sides)
-        else:
-            self.__sides = [1] * self.sides_count
-        self.__validate_sides()
 
+
+    def __init__(self, rgb, *side):
+        self.color = list(rgb)
+        self.side = side[0]
+        self.filled = True
+
+    # ===== Работа с цветом
     def get_color(self):
+        self.__color = self.color
+        self.filled = True
         return self.__color
 
-    def __is_valid_color(self, r, g, b):
-        return isinstance(r, int) and isinstance(g, int) and isinstance(b, int) and 0 <= r <= 255 and 0 <= g <= 255 and 0 <= b <= 255
+    def _is_valid_color(self, r, g, b):
+        self.r, self.g, self.b = r, g, b
+        if 0 <= self.r <= 255 and 0 <= self.g <= 255 and 0 <= self.b <= 255:
+            return True
+        else:
+            return False
 
     def set_color(self, r, g, b):
-        if self.__is_valid_color(r, g, b):
-            self.__color = [r, g, b]
+        if self._is_valid_color(r, g, b):
+            self.color = [self.r, self.g, self.b]
 
-    def __validate_sides(self):
-        if not all(isinstance(side, int) and side > 0 for side in self.__sides) or len(self.__sides) != self.sides_count:
-            raise ValueError("Некорректные значения сторон.")
+    # =====
+
+    # ===== Работа со сторонами
+    def __is_valid_sides(self, *args):
+        for side in self.sides:
+            if len(self.sides) == self.sides_count and side > 0 and type(side) == int:
+                return True
+            else:
+                return False
+
+    def set_sides(self, *args):
+        massive_list = []
+        self.sides = list(args)
+        if self.__is_valid_sides(self, *args):
+            self.get_sides()
+        else:
+            for i in range(self.sides_count):
+                massive_list.append(self.side)
+            self.sides = massive_list
+            self.get_sides()
 
     def get_sides(self):
+        self.__sides = self.sides
         return self.__sides
 
-    def set_sides(self, *new_sides):
-        if len(new_sides) == self.sides_count:
-            self.__sides = list(new_sides)
-            self.__validate_sides()
-
     def __len__(self):
-        return sum(self.__sides)
+        return self.side * self.sides_count
+
+    # =====
+
+
 
 class Circle(Figure):
     sides_count = 1
-
-    def __init__(self, color, *sides):
-        super().__init__(color, *sides)
-        self.__radius = self.__sides[0] / (2 * math.pi)
+    __radius = None
+    def set_radius(self):
+        self.__radius = self.__len__() / (2 * math.pi)
+        return self.__radius
 
     def get_square(self):
-        return math.pi * self.__radius**2
+        self.set_radius()
+        return math.pi * self.__radius ** 2
 
-    def check_circle(self):
-        if not isinstance(self.__radius, float) or self.__radius <= 0:
-            raise ValueError("Некорректный радиус.")
 
 class Triangle(Figure):
     sides_count = 3
 
-    def __init__(self, color, *sides):
-        super().__init__(color, *sides)
-
     def get_square(self):
-        s = sum(self.__sides) / 2
-        return math.sqrt(s * (s - self.__sides[0]) * (s - self.__sides[1]) * (s - self.__sides[2]))
+        return (self.side ** 2) * (3 ** 0.5) / 4
 
-    def check_triangle(self):
-        if not all(isinstance(side, int) and side > 0 for side in self.__sides):
-            raise ValueError("Некорректные значения сторон.")
-        if not (self.__sides[0] + self.__sides[1] > self.__sides[2] and
-                self.__sides[0] + self.__sides[2] > self.__sides[1] and
-                self.__sides[1] + self.__sides[2] > self.__sides[0]):
-            raise ValueError("Некорректные значения сторон: не соблюдается неравенство треугольника.")
+
 
 class Cube(Figure):
     sides_count = 12
 
-    def __init__(self, color, *sides):
-        super().__init__(color, *sides)
-        self.__sides = [sides[0]] * self.sides_count
+    def set_side_lst(self):
+        set_side_lst = []
+        for element in range(self.sides_count):
+            set_side_lst.append(self.sides)
+        self.__sides = set_side_lst
+        return self.__sides
 
     def get_volume(self):
-        return self.__sides[0]**3
+        return self.side ** 3
 
-    def check_cube(self):
-        if not isinstance(self.__sides[0], int) or self.__sides[0] <= 0:
-            raise ValueError("Некорректное значение стороны.")
 
-# Проверка
-circle1 = Circle((200, 200, 100), 10)
+
+circle1 = Circle((200, 200, 100), 10) # (Цвет, стороны)
 cube1 = Cube((222, 35, 130), 6)
 
 # Проверка на изменение цветов:
-circle1.set_color(55, 66, 77)
+circle1.set_color(55, 66, 77) # Изменится
 print(circle1.get_color())
-cube1.set_color(300, 70, 15)
+cube1.set_color(300, 70, 15) # Не изменится
 print(cube1.get_color())
 
 # Проверка на изменение сторон:
-cube1.set_sides(5, 3, 12, 4, 5)
+cube1.set_sides(5, 3, 12, 4, 5) # Не изменится
 print(cube1.get_sides())
-circle1.set_sides(15)
+circle1.set_sides(15) # Изменится
 print(circle1.get_sides())
 
 # Проверка периметра (круга), это и есть длина:
