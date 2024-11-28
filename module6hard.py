@@ -170,7 +170,8 @@ class Figure:
             self.get_sides()
         else:
             for i in range(self.sides_count):
-                massive_list.append(self.side)
+                massive_list.append(self.side)  # если делать как указано в примере выполнения задания (вывод на консоль)
+                # massive_list.append(1)       # если делать как в ТЗ, где выводится массив из 1 числом в кол-во сторон
             self.sides = massive_list
             self.get_sides()
 
@@ -199,7 +200,6 @@ class Circle(Figure):
 
 class Triangle(Figure):
     sides_count = 3
-
     def get_square(self):
         a, b, c = self.__sides
         s = (a + b + c) / 2
@@ -209,7 +209,6 @@ class Triangle(Figure):
 
 class Cube(Figure):
     sides_count = 12
-
     def set_side_lst(self):
         set_side_lst = []
         for element in range(self.sides_count):
