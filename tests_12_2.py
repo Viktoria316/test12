@@ -123,7 +123,7 @@ class TournamentTest(unittest.TestCase):
     def test_run_1(self):
         test_tournament = Tournament(90, self.name1, self.name3)
         a = test_tournament.start()
-        # print(res)
+        # print(a)
         self.all_results['Усейн и Ник'] = a
         key = max(a.keys())
         self.assertTrue(a[key] == self.name3)
