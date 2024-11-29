@@ -44,6 +44,8 @@ test_run:
 Успехов!
 '''
 
+import unittest
+# import tests_12_1 as code
 import logging
 
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w",
@@ -51,3 +53,41 @@ logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="w",
 logging.info("")
 logging.info("")
 logging.info("")
+
+class Runner:
+    def __init__(self, name):
+        self.name = name
+        self.distance = 0
+
+    def run(self):
+        self.distance += 10
+
+    def walk(self):
+        self.distance += 5
+
+    def __str__(self):
+        return self.name
+
+class RunnerTest(unittest.TestCase):
+    def test_walk(self):
+        try:
+            runner = Runner("name1666")
+            for i in range(10):
+                runner.walk()
+            self.assertEqual(runner.distance, 50)
+            logging.info('"test_walk" выполнен успешно')
+        except ValueError:
+            logging.warning('Неверная скорость для Runner', exc_info=True)
+
+    def test_run(self):
+        try:
+            runner = Runner("name2")
+            for i in range(10):
+                runner.run()
+            self.assertEqual(runner.distance, 100)
+            logging.info('"test_run" выполнен успешно')
+        except TypeError:
+            logging.warning('Неверный тип имени для Runner', exc_info=True)
+
+if __name__ == "__main__":
+    unittest.main()
