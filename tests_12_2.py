@@ -99,7 +99,8 @@ class Tournament:
 
 
 class TournamentTest(unittest.TestCase):
-    # all_results = {}
+    all_results = {}
+    is_frozen = True
     @classmethod
     def setUpClass(cls):
         cls.all_results = {}
@@ -119,7 +120,7 @@ class TournamentTest(unittest.TestCase):
                 print(f'{cls.all_results[key][i]} - {i}')
             print()
 
-
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_run_1(self):
         test_tournament = Tournament(90, self.name1, self.name3)
         a = test_tournament.start()
@@ -128,6 +129,7 @@ class TournamentTest(unittest.TestCase):
         key = max(a.keys())
         self.assertTrue(a[key] == self.name3)
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_run_2(self):
         test_tournament = Tournament(90,self.name2, self.name3)
         a = test_tournament.start()
@@ -135,6 +137,7 @@ class TournamentTest(unittest.TestCase):
         key = max(a.keys())
         self.assertTrue(a[key] == self.name3)
 
+    @unittest.skipIf(is_frozen, 'Тесты в этом кейсе заморожены')
     def test_run_3(self):
         test_tournament = Tournament(90, self.name1, self.name2, self.name3)
         a = test_tournament.start()
